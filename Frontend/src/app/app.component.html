@@ -1,0 +1,4 @@
+<app-navbar *ngIf="router.url != '/' && router.url !='/admin' && router.url !='/error' && router.url != '/success'">
+</app-navbar>
+<router-outlet></router-outlet>
+<app-footer *ngIf="router.url != '/success'"></app-footer>

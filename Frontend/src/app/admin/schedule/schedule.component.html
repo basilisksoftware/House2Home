@@ -1,0 +1,22 @@
+<div class="container-fluid customBackground" style="height: 100%;">
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <div *ngIf="!loading" id="main" style="padding:3%;">
+
+    <!--Title-->
+    <div class="row">
+      <h3 class="text-muted">Driver Schedule</h3>
+    </div>
+
+    <!--Subtitle-->
+    <div class="row">
+  <div class="text-muted">This page shows all pending deliveries.</div>
+    </div>
+
+    <hr> <br>
+
+    <!--Tables-->
+    <app-manage-table [donations]="awaitingDonations"  [isSchedule]="true" heading="Awaiting Collection"></app-manage-table>
+    <hr>
+
+  </div>
+</div>

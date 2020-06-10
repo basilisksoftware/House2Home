@@ -1,0 +1,289 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div *ngIf="!loading" id="main" class="container mt-5">
+
+    <!--Title/Subtitle/Progress button-->
+    <div class="row">
+        <div class="col">
+            <h3 class="text-muted">Donation</h3>
+            <div class="text-muted">Use this page to progress or reject a donation</div>
+        </div>
+        
+        <div class="col align-self-center ">
+
+            <!--Date picker-->
+            <div *ngIf="this.donation.status === 'Accepted'" class="form-group float-right ml-2">
+                <input id="datepicker" type="date" class="form-control" [(ngModel)]="collectionDate">
+            </div>
+
+            <!--Progress button-->
+            <button (click)="nextStage()" class="btn btn-outline-success float-right"
+                *ngIf="this.donation.status != 'Archived' && this.donation.status !='Rejected'">
+                {{progressButtonText}}
+                <!--Progress button icon-->
+                <span class="ml-2">
+                    <fa-icon *ngIf="this.donation.status == null" [icon]="faCheckCircle"></fa-icon>
+                    <fa-icon *ngIf="this.donation.status == 'Accepted'" [icon]="faTruck"></fa-icon>
+                    <fa-icon *ngIf="this.donation.status == 'Awaiting Collection'" [icon]="faCheckDouble"></fa-icon>
+                    <fa-icon *ngIf="this.donation.status == 'Completed'" [icon]="faArchive"></fa-icon>
+                </span>
+            </button>
+
+
+            <!--Reject button-->
+            <button (click)="reject()" *ngIf="this.donation.status == null" class="btn btn-danger float-right mr-2">
+                Reject
+                <span class="ml-2">
+                    <fa-icon [icon]="faTimesCircle"></fa-icon>
+                </span>
+            </button>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2 offset-10">
+            
+        </div>
+    </div>
+
+
+    <br>
+
+    <hr style="margin-bottom: 20px;">
+
+    <!--Progress steps-->
+    <div class="container-fluid">
+        <ul class="list-unstyled multi-steps">
+            <li [ngClass]="{'is-active': this.donation.status == null}">New</li>
+            <li [ngClass]="{'is-active': this.donation.status == 'Accepted'}">Accepted</li>
+            <li [ngClass]="{'is-active': this.donation.status == 'Awaiting Collection'}">Awaiting Collection</li>
+            <li [ngClass]="{'is-active': this.donation.status == 'Completed'}">Completed</li>
+            <li [ngClass]="{'is-active': this.donation.status == 'Archived'}">Archived</li>
+        </ul>
+    </div>
+
+    <hr> <br>
+
+    <!--Details card-->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white small font-weight-bold">
+                    DONOR DETAILS
+                </div>
+                <div class="card-body">
+
+                    <!--Row 1-->
+                    <div class="row">
+
+                        <!--Id-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Id</div>
+                            <div class="small">{{donation.id}}</div>
+                        </div>
+
+                        <!--Submitted On-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Submitted On</div>
+                            <div class="small">{{donation.submissionDate | date:'dd/MM/yyyy H:mm:ss'}}</div>
+                        </div>
+
+                        <!--Donor name-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Donor Name</div>
+                            <div class="small">{{donation.name}}</div>
+                        </div>
+
+                        <!--Smoke-free-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Smoke-free Household?</div>
+                            <div class="small"
+                                [ngClass]="donation.smokeFree == 'Yes' ? 'badge badge-success' : 'badge badge-danger'">
+                                {{donation.smokeFree}}
+                            </div>
+                        </div>
+
+                        <!--Pet-free-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Pet-free Household?</div>
+                            <div class="small"
+                                [ngClass]="donation.petFree == 'Yes' ? 'badge badge-success' : 'badge badge-danger'">
+                                {{donation.petFree}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <!--Row 2-->
+                    <div class="row mt-4">
+
+                        <!--Address-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Address</div>
+                            <div class="small">{{donation.address}}</div>
+                        </div>
+
+                        <!--Phone-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Phone</div>
+                            <div class="small">{{donation.phone}}</div>
+                        </div>
+
+                        <!--Email-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Email</div>
+                            <div *ngIf="isAdmin" class="small">{{donation.email}}</div>
+                        </div>
+
+                        <!--Collection Date-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Collection Date </div>
+                            <div class="small">
+                                {{donation.collectionDate == null ? '(n/a)' : donation.collectionDate | date:'dd/MM/yyyy'}}
+                            </div>
+                        </div>
+
+                        <!--Current Status-->
+                        <div class="col">
+                            <div class="font-weight-bold small mb-2">Status</div>
+                            <div class="badge badge-info">{{donation.status === null ? 'New' : donation.status}}</div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Items to collect card-->
+    <div class="row mt-5" *ngIf="this.donation.status != null">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white small font-weight-bold">
+                    ITEMS TO COLLECT
+                </div>
+                <div class="card-body">
+                    <div *ngIf="numCollections == 0;" class="badge badge-warning p-2">
+                        <span class="ml-1 mr-2">
+                            <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+                        </span>Not currently collecting any items - at least one item must be set to 'collect' in order
+                        to progress this submission
+                    </div>
+                    <div *ngIf="numCollections > 0" class="small text-muted mb-3">Collecting {{numCollections}} of
+                        {{donation.items.length}} items</div>
+                    <div *ngFor="let item of donation.items; index as i">
+
+                        <!--Item description-->
+                        <div class="py-1 px-2 my-1 text-white bg-info rounded shadow text-small"
+                            *ngIf="item.collect == true">
+                            <span class="mr-2 ml-1">
+                                <fa-icon [icon]="faBoxOpen"></fa-icon>
+                            </span>
+                            {{item.description}}
+                            <!--Delete button-->
+                            <span *ngIf="this.donation.status == 'Accepted'" (click)="toggleItemCollection(item)"
+                                class="custom-x mr-2 ml-1 float-right text-white">
+                                <fa-icon [icon]="faTimesCircle"></fa-icon>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Items card-->
+    <div class="row mt-5 mb-5 pb-5">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white small font-weight-bold">
+                    ITEM DETAILS
+                </div>
+                <div class="card-body">
+
+                    <div class="border shadow p-3 mb-3" *ngFor="let item of donation.items; index as i">
+
+                        <!--Row 1-->
+
+                        <div class="row p-1">
+
+                            <!--Title-->
+                            <div class="col my-auto">
+                                <h4 class="text-muted mb-0">
+                                    Item {{i + 1}}
+                                </h4>
+                            </div>
+
+                            <!--Accept/Reject button-->
+                            <div class="col" *ngIf="this.donation.status == 'Accepted'">
+                                <button (click)="toggleItemCollection(item)" *ngIf="item.collect == false"
+                                    class="btn btn-success float-right align-middle">
+                                    Collect
+                                    <span class="ml-2">
+                                        <fa-icon [icon]="faCheckCircle"></fa-icon>
+                                    </span>
+                                </button>
+                                <button (click)="toggleItemCollection(item)" *ngIf="item.collect == true"
+                                    class="btn btn-danger float-right align-middle">
+                                    Reject
+                                    <span class="ml-2">
+                                        <fa-icon [icon]="faTimesCircle"></fa-icon>
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <hr class="mb-4">
+
+                        <!--Row 2-->
+                        <div class="row">
+
+                            <!--Description-->
+                            <div class="col">
+                                <div class="font-weight-bold small mb-2">Description</div>
+                                <div>{{item.description}}</div>
+                            </div>
+
+                            <!--Category-->
+                            <div class="col">
+                                <div class="font-weight-bold small mb-2">Category</div>
+                                <div>{{item.category}}</div>
+                            </div>
+
+                            <!--Fire labels-->
+                            <div class="col">
+                                <div class="font-weight-bold small mb-2">Fire Labels?</div>
+                                <div
+                                    [ngClass]="item.fireLabels == 'Yes' ? 'badge badge-success' : 'badge badge-danger'">
+                                    {{item.fireLabels}}</div>
+                            </div>
+
+                            <!--Collect-->
+                            <div class="col">
+                                <div class="font-weight-bold small mb-2">Collection</div>
+                                <div [ngClass]="item.collect == true ? 'badge badge-success' : 'badge badge-danger'">
+                                    {{item.collect === false ? 'No' : 'Yes'}}</div>
+                            </div>
+
+
+
+                        </div>
+
+                        <!--Row 3-->
+                        <div class="row mt-3">
+                            <div class="col">
+                                <img class=" img-fluid mb-3" *ngFor="let pic of item.splitUrls" src="{{pic}}"
+                                    alt="{{item.description}}">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

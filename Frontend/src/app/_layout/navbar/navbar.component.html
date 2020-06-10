@@ -1,0 +1,71 @@
+<!--Top navbar-->
+<nav class="navbar">
+  <div [routerLink]="['/admin']" class="navbar-brand ml-5 custom-home">
+    <img src="../../../assets/img/logo.jpg" width="30" height="30" alt="">
+    <span class="text-muted ml-3 align-middle">House2Home</span>
+  </div>
+
+  <div class="dropdown ">
+    <div class="dropdown-toggle mr-5 text-small text-muted" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      <span class="mr-2 text-muted">
+        <fa-icon [icon]="faUser"></fa-icon>
+      </span>
+      Welcome, {{username}}
+    </div>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <div (click)="logout()" class="dropdown-item">Logout</div>
+      <div class="dropdown-item">Help</div>
+    </div>
+  </div>
+</nav>
+
+<!--Main navbar-->
+<nav id="mainNav" class="navbar navbar-expand-lg g-dark-blue">
+
+  <!--Home icon-->
+  <div *ngIf="isAdmin" [routerLink]="['/admin']" class="nav-item mr-5 ml-5 text-white custom-home">
+    <fa-icon [style.fontSize.px]="24" [icon]="faHome"></fa-icon>
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <span class="navbar-toggler-icon text-white"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+
+      <!--Manage-->
+      <li *ngIf="isAdmin" class="nav-item">
+        <a [routerLink]="['/admin/manage']" routerLinkActive="active" class="nav-link mr-4 text-white"><span
+            class="mr-2">
+            <fa-icon [icon]="faTasks"></fa-icon>
+          </span>Manage</a>
+      </li>
+
+      <!--Archive-->
+      <li *ngIf="isAdmin" class="nav-item">
+        <a [routerLink]="['/admin/archive']" routerLinkActive="active" class="nav-link mr-4 text-white"><span
+            class="mr-2">
+            <fa-icon [icon]="faHistory"></fa-icon>
+          </span>Archive</a>
+      </li>
+
+      <!--Schedule-->
+      <li class="nav-item">
+        <a [routerLink]="['/admin/schedule']" routerLinkActive="active" class="nav-link mr-4 text-white"><span
+            class="mr-2">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+          </span>Schedule</a>
+      </li>
+
+      <!--Settings-->
+      <li *ngIf="isAdmin" class="nav-item">
+        <a [routerLink]="['/admin/settings']" routerLinkActive="active" class="nav-link mr-4 text-white"><span
+            class="mr-2">
+            <fa-icon [icon]="faCogs"></fa-icon>
+          </span>Settings</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>

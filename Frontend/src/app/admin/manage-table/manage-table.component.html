@@ -1,0 +1,43 @@
+<!--Submissions-->
+<div class="row">
+
+  <div class="col">
+
+    <div class="card shadow border">
+
+      <div [ngClass]="{'bg-warning': isArchive, 'bg-success': isSchedule, 'bg-info': isManage, 'bg-secondary': isReject}"
+        class="card-header text-white small font-weight-bold">
+        {{heading | uppercase}}
+      </div>
+
+      <!--Card body-->
+      <div class="card-body">
+        <table datatable class="row-border hover">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Submission Date</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Items</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let donation of donations" [routerLink]="['/admin/manage/', donation.id]">
+              <td>{{donation.id}}</td>
+              <td>{{donation.submissionDate | date:'dd/MM/yyyy H:mm:ss'}}</td>
+              <td>{{donation.name}}</td>
+              <td>{{donation.address}}</td>
+              <td>{{donation.phone}}</td>
+              <td>{{donation.items.length}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

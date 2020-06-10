@@ -1,0 +1,26 @@
+<form class="p-5" #loginForm="ngForm" (ngSubmit)="login()">
+
+  <!--Logo-->
+  <div class="text-center mb-4">
+    <img src="../../assets/img/logo.jpg" style="width: 90px; height: 75px; border-radius: 10px;">
+  </div>
+
+  <!--Title-->
+  <h1 class="h3 mb-4 font-weight-normal text-center text-muted">Please sign in</h1>
+
+  <!--Username-->
+  <div class="form-group">
+    <input name="username" [(ngModel)]="model.username" required type="text" class="form-control" id="username" placeholder="Username">
+  </div>
+
+  <!--Password-->
+  <div class="form-group">
+    <input name="password" [(ngModel)]="model.password" required type="password" class="form-control mb-3" id="password" placeholder="Password">
+  </div>
+
+  <!--Submit button-->
+  <button type="submit" class="btn btn-primary btn-block btn-lg mt-5">Sign in</button>
+
+  <p class="mt-5 mb-3 text-muted text-center">© 2019-2020 Jazz Singh</p>
+
+</form>

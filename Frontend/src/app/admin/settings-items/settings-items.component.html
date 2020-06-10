@@ -1,0 +1,92 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div *ngIf="!loading">
+    <h6 class="text-muted">Categories</h6>
+    <hr>
+
+    <!--Add a category-->
+
+
+    <div class="mb-5 border shadow p-3 rounded" style="max-width: 700px;">
+
+        <!--Subtitle-->
+        <div class="row">
+            <div class="col">
+                <p class="text-muted font-weight-bold">Add a new category</p>
+            </div>
+        </div>
+
+        <!--Row 1-->
+        <div class="row">
+
+            <!--Category Input-->
+            <div class="col">
+                <input required name="catName" [(ngModel)]="categoryName" type="text" class="form-control"
+                    placeholder="Enter a category name" #catName="ngModel">
+                <small *ngIf="catName.invalid && catName.touched" class="text-danger">Enter a name</small>
+            </div>
+
+            <!--Add Button-->
+            <div class="col-2">
+                <button (click)="addCategory()" class="btn btn-success btn"><span class="mr-2">
+                        <fa-icon [icon]="faPlusCircle"></fa-icon>
+                    </span>Add</button>
+            </div>
+        </div>
+
+        <!--Row 2-->
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-check">
+                    <input name="verifyFireLabels" [(ngModel)]="verifyFireLabels" type="checkbox"
+                        class="form-check-input">
+                    <label class="form-check-label">Fire labels relevant?</label>
+                    <br>
+                    <small class="text-muted">Check this box if verfication of fire labels is needed for items in this
+                        category</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--Current category list-->
+    <div class="mb-5 border shadow p-3 rounded" style="max-width: 700px;">
+        <div class="row">
+            <div class="col">
+                <p class="text-muted font-weight-bold">Current categories</p>
+            </div>
+        </div>
+
+        <!--'Nothing here' message-->
+        <div *ngIf="categories.length === 0; else list" class="row">
+            <div class="col">
+                <i class="text-muted text-small">Nothing here!</i>
+            </div>
+        </div>
+
+        <!--List actual-->
+        <ng-template #list>
+            <div class="row">
+                <div class="col">
+                    <ul class="list-group">
+                        <li *ngFor="let cat of categories; let i = index" class="list-group-item align-middle">
+                            {{cat.categoryName}}
+                            <span class="ml-3 badge badge-danger" *ngIf="cat.verifyFireLabels">
+                                <fa-icon [icon]="faFireAlt"></fa-icon>
+                            </span>
+                            <span>
+                                <button (click)="removeCategory(cat.id, i)" class="btn btn-danger btn-sm float-right">
+                                    <fa-icon [icon]="faTrashAlt"></fa-icon>
+                                </button>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ng-template>
+
+
+    </div>
+</div>

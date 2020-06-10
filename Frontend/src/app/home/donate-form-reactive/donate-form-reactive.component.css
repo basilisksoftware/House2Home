@@ -1,0 +1,29 @@
+#itemGroup {
+    margin-bottom: 15px;    
+}
+
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.help-block {
+    color: red;
+}
+
+.padded {
+    padding: 10px;
+    background-color:#f2f2f2;
+}
+
+input[type="file"] {
+    visibility: hidden;
+}
+
+.custom-outline {
+    background: white !important;
+    color: green !important;
+}
+
+button:hover:disabled {
+    cursor: not-allowed;
+}

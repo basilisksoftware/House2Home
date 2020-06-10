@@ -1,0 +1,21 @@
+#mainNav {
+  font-size: 14px;
+  font-weight: 500;
+  /* background-color: #05668d !important; */
+}
+
+.active {
+  background-color: #f4a701;
+  border-radius: 20px;
+}
+
+a:hover {
+  background-color: #00a896 !important;
+  border-radius: 20px;
+}
+
+.custom-home:hover{
+    cursor: pointer;
+    background-color: none;
+}
+

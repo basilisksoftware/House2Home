@@ -1,0 +1,31 @@
+<div class="container-fluid customBackground" style="height: 100%;">
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <div *ngIf="!loading" id="main" style="padding:3%;">
+
+    <!--Title-->
+    <div class="row">
+      <h3 class="text-muted">Archived Submissions</h3>
+    </div>
+
+    <!--Subtitle-->
+    <div class="row">
+      <div class="text-muted">Use this page to view archived and rejected submissions.</div>
+    </div>
+
+    <hr> <br>
+
+    <!--Tables-->
+    <app-manage-table [donations]="archivedDonations" [isArchive]="true" heading="Archive"></app-manage-table>
+    <hr>
+
+    <button *ngIf="!rejectsLoaded; else rejectTable" (click)="getRejects()" class="btn btn-info text-white font-weight-bold">
+      <span class="mr-2"><fa-icon [icon]="faMinusCircle"></fa-icon></span>
+      Load Rejects</button>
+    <ng-template #rejectTable>
+      <app-manage-table [isReject]="true" [donations]="rejectedDonations" heading="Rejected">
+      </app-manage-table>
+    </ng-template>
+    <hr>
+
+  </div>
+</div>

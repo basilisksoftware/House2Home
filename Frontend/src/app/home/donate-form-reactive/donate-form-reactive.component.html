@@ -1,0 +1,177 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div *ngIf="!loading" class="row justify-content-center">
+    <div class="col-md-12">
+        <h4 class="lead text-muted" style="font-size: 30px;">Your Details</h4>
+        <hr>
+        <form [formGroup]="donateForm" (ngSubmit)="onSubmit()">
+            <div class="border rounded padded shadow">
+
+                <!--Name-->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input placeholder="Enter your full name" type="text" required class="form-control"
+                        formControlName="name" #name>
+                    <span *ngIf="!donateForm.get('name').valid && donateForm.get('name').touched"
+                        class="help-block">Please enter your name</span>
+                </div>
+
+                <!--Address-->
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea placeholder="Enter your full address and postcode" rows="3" required class="form-control"
+                        formControlName="address"></textarea>
+                    <span *ngIf="!donateForm.get('address').valid && donateForm.get('address').touched"
+                        class="help-block">Please enter your address</span>
+                </div>
+
+                <!--Phone-->
+                <div class="form-group">
+                    <label for="address">Phone</label>
+                    <input placeholder="Enter a contact phone number" type="text" required class="form-control"
+                        formControlName="phone">
+                    <span *ngIf="!donateForm.get('phone').valid && donateForm.get('phone').touched"
+                        class="help-block">Please enter your phone number</span>
+                </div>
+
+                <!--Email-->
+                <div class="form-group">
+                    <label for="address">Email</label>
+                    <input placeholder="Enter your email address" type="email" required email class="form-control"
+                        formControlName="email">
+                    <span *ngIf="!donateForm.get('email').valid && donateForm.get('email').touched"
+                        class="help-block">Please enter a valid email</span>
+                </div>
+
+
+                <!--Pet-free/Smoke-free-->
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="pet">Pet-free household?</label>
+                            <select id="pet" required formControlName="petFree" class="form-control">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="smk">Smoke-free household?</label>
+                            <select id="smk" required formControlName="smokeFree" class="form-control">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <br><br>
+
+            <div class="row h-100">
+                <div class="col-sm-10">
+                    <h4 class="lead text-muted" style="font-size: 30px;">Items</h4>
+                    <p>Let us know what you'd like to donate. Use the "Add Item" button to add additional items.</p>
+                </div>
+                <div class="col-sm-2 my-auto">
+                    <button [disabled]="submitDisabledAfterPost" type="button" class="btn btn-info float-right" (click)="onAddItem()">
+                        <span>
+                            <fa-icon [icon]="faPlusCircle"></fa-icon>
+                        </span>
+                        Add Item
+                    </button>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="card shadow mb-1" id="itemGroup" formArrayName="items"
+                *ngFor="let item of getControls(); let i = index">
+                <div class="card-body pb-1" [formGroupName]="i">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input placeholder="Describe the item" required formControlName="description"
+                                    class="form-control">
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="cat">Category</label>
+                                <select id="cat" required formControlName="category" class="form-control">
+                                    <option *ngFor="let cat of categories">{{cat.categoryName}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-check">
+                                <label for="fbls">Fire labels?</label>
+                                <select id="flbs" required formControlName="fireLabels" class="form-control">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--File picker-->
+                <div class="row">
+                    <div class="col-sm-9 col-xs-6">
+                        <div class="form-group m-0">
+                            <button [disabled]="submitDisabledAfterPost" type="button" class="btn btn-primary float-left mb-1"
+                                style="margin-left:20px !important;" (click)="picUpload.click()">
+                                <span>
+                                    <fa-icon [icon]="faPlusCircle"></fa-icon>
+                                </span>
+                                Add Images
+                            </button>
+                            <input class="d-none" type="file" multiple (change)="onFilePicked($event, i)" #picUpload>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <button *ngIf="numItems > 1" type="button" [disabled]="numItems == 1"
+                            class="btn btn-danger float-right mr-3" (click)="onDeleteItem(i)">
+                            <span>
+                                <fa-icon [icon]="faTrashAlt"></fa-icon>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row mb-2 mr-1 ml-1 mt-1">
+                    <div class="col">
+                        <div class="border text-white rounded p-1 bg-secondary mt-1"
+                            *ngFor="let file of picUpload.files">
+                            <span class="ml-2 mr-2">
+                                <fa-icon [icon]="faImages"></fa-icon>
+                            </span>
+                            {{file.name}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <hr>
+
+            <button type="submit" [disabled]="!donateForm.valid || submitDisabledAfterPost"
+                class="btn btn-success btn-lg float-right">
+                <span *ngIf="!submitDisabledAfterPost" class="mr-1">
+                    <fa-icon [icon]="faCheckCircle"></fa-icon>
+                </span>
+                {{submitButtonText}}
+            </button>
+        </form>
+    </div>
+</div>

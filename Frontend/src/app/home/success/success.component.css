@@ -1,0 +1,13 @@
+#main {
+  background-image: url("../../../assets/img/wall_blue.jpg");
+  background-size: cover;
+  max-width: 100%;
+}
+
+#title {
+  background-color: rgba(52, 58, 64, 0.678);
+}
+
+#logo {
+  border-radius: 20px;
+}

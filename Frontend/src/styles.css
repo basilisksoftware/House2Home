@@ -1,0 +1,81 @@
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.customBackground {
+  background-color: #f5f5f5;
+}
+
+.g-blue {
+  background: rgb(0, 123, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 123, 255, 1) 0%,
+    rgba(71, 158, 251, 1) 100%
+  );
+}
+
+.g-green {
+  background: rgb(50, 173, 79);
+  background: linear-gradient(
+    90deg,
+    rgba(50, 173, 79, 1) 0%,
+    rgba(63, 210, 98, 1) 100%
+  );
+}
+
+.g-yellow {
+  background: rgb(255, 192, 11);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 192, 11, 1) 0%,
+    rgba(246, 205, 87, 1) 100%
+  );
+}
+
+.g-dark-blue {
+  background: rgb(5, 102, 141);
+  background: linear-gradient(
+    90deg,
+    rgba(5, 102, 141, 1) 0%,
+    rgba(5, 148, 205, 1) 100%
+  );
+}
+
+.g-gray {
+  background: rgb(113, 113, 113);
+  background: linear-gradient(
+    90deg,
+    rgba(113, 113, 113, 1) 0%,
+    rgba(176, 171, 171, 1) 100%
+  );
+}
+
+.g-light-gray {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(217, 214, 214, 1) 100%
+  );
+}
+
+.g-dark {
+  background: rgb(52, 58, 64);
+  background: linear-gradient(
+    90deg,
+    rgba(52, 58, 64, 1) 0%,
+    rgba(77, 86, 94, 1) 100%
+  );
+}

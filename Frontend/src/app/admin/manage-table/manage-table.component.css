@@ -1,0 +1,12 @@
+.custom-heading {
+    background-color: #028090;
+    border-radius: 1px;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    margin:5px;
+}
+
+td {
+    cursor: pointer;
+}

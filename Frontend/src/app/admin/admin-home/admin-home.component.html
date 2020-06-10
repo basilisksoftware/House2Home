@@ -1,0 +1,174 @@
+<div class="container-fluid customBackground">
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <div *ngIf="!loading" id="main" style="padding:3%;">
+
+        <!--Title-->
+        <div class="row">
+            <h3 class="text-muted">Dashboard</h3>
+        </div>
+
+        <!--Subtitle-->
+        <div class="row">
+            <div class="text-muted">Below is a summary of the current state of House2Home</div>
+        </div>
+
+        <hr> <br>
+
+        <!--Current stats card-->
+        <div class="card-header small bg-dark text-white border font-weight-bold ml-5 mr-5"
+            style="border-radius: 5px 5px 0px 0px;">
+            CURRENT
+        </div>
+        <div class="row bg-light shadow rounded border mb-5 p-5 ml-5 mr-5 d-flex justify-content-around"
+            style="border-radius: 0px 0px 5px 5px;">
+
+            <app-stats-box statTitle="Awaiting Response" bgc="yellow" [stat]="stats.donations.awaitingResponse">
+            </app-stats-box>
+            <app-stats-box statTitle="Awaiting Collection" bgc="blue" [stat]="stats.donations.awaitingCollection">
+            </app-stats-box>
+            <app-stats-box statTitle="Collection Arranged" bgc="green" [stat]="stats.donations.collectionArranged">
+            </app-stats-box>
+
+        </div>
+
+
+        <!--Overview stats card-->
+        <div class="card-header small bg-dark text-white border font-weight-bold ml-5 mr-5"
+            style="border-radius: 5px 5px 0px 0px;">
+            OVERVIEW
+        </div>
+
+        <div class="row shadow bg-light border p-5 d-flex ml-5 mr-5 mb-5 d-flex justify-content-around"
+            style="border-radius: 0px 0px 5px 5px;">
+
+            <div class="col">
+
+                <!--Submissions Table-->
+                <div class="row">
+                    <div class="text-muted small font-weight-bold">SUBMISSIONS</div>
+                </div>
+                <hr>
+                <div class="row">
+                    <table class="table table-bordered table-hover rounded shadow">
+                        <thead class="bg-secondary text-white">
+                            <tr>
+                                <th>Timescale</th>
+                                <th>Submissions Recieved</th>
+                                <th>Submissions Accepted</th>
+                                <th>Submissions Rejected</th>
+                                <th>% Accepted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>This Week</td>
+                                <td>{{stats.donations.receivedWeek}}</td>
+                                <td>{{stats.donations.receivedWeek - stats.donations.rejectedWeek - stats.donations.awaitingResponse}}
+                                </td>
+                                <td>{{stats.donations.rejectedWeek}}</td>
+                                <td>{{(stats.donations.receivedWeek - stats.donations.rejectedWeek - stats.donations.awaitingResponse)/stats.donations.receivedWeek | percent}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>This Month</td>
+                                <td>{{stats.donations.receivedMonth}}</td>
+                                <td>{{stats.donations.receivedMonth - stats.donations.rejectedMonth - stats.donations.awaitingResponse}}
+                                </td>
+                                <td>{{stats.donations.rejectedMonth}}</td>
+                                <td>{{(stats.donations.receivedMonth - stats.donations.rejectedMonth - stats.donations.awaitingResponse)/stats.donations.receivedMonth | percent}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>This Year</td>
+                                <td>{{stats.donations.receivedYear}}</td>
+                                <td>{{stats.donations.receivedYear - stats.donations.rejectedYear - stats.donations.awaitingResponse}}
+                                </td>
+                                <td>{{stats.donations.rejectedYear}}</td>
+                                <td>{{(stats.donations.receivedYear - stats.donations.rejectedYear - stats.donations.awaitingResponse)/stats.donations.receivedYear | percent}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>All Time</td>
+                                <td>{{stats.donations.receivedAll}}</td>
+                                <td>{{stats.donations.receivedAll - stats.donations.rejectedAll - stats.donations.awaitingResponse}}
+                                </td>
+                                <td>{{stats.donations.rejectedAll}}</td>
+                                <td>{{(stats.donations.receivedAll - stats.donations.rejectedAll - stats.donations.awaitingResponse)/stats.donations.receivedAll | percent}}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Items Table -->
+                <div class="row">
+                    <div class="text-muted small font-weight-bold mt-4">ITEMS</div>
+                </div>
+                <hr>
+                <div class="row">
+                    <table class="table table-bordered table-hover rounded shadow">
+                        <thead class="bg-secondary text-white">
+                            <tr>
+                                <th>Timescale</th>
+                                <th>Total Items</th>
+                                <th>Items Accepted</th>
+                                <!-- <th>Items Rejected</th> -->
+                                <th>% Accepted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>This Week</td>
+                                <td>{{stats.items.receivedWeek}}</td>
+                                <td>{{stats.items.receivedWeek - stats.items.rejectedWeek}}</td>
+                                <!-- <td>{{stats.items.rejectedWeek}}</td> -->
+                                <td>{{(stats.items.receivedWeek - stats.items.rejectedWeek)/stats.items.receivedWeek | percent}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>This Month</td>
+                                <td>{{stats.items.receivedMonth}}</td>
+                                <td>{{stats.items.receivedMonth - stats.items.rejectedWeek}}</td>
+                                <!-- <td>{{stats.items.rejectedMonth}}</td> -->
+                                <td>{{(stats.items.receivedMonth - stats.items.rejectedMonth)/stats.items.receivedMonth | percent}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>This Year</td>
+                                <td>{{stats.items.receivedYear}}</td>
+                                <td>{{stats.items.receivedYear - stats.items.rejectedWeek}}</td>
+                                <!-- <td>{{stats.items.rejectedYear}}</td> -->
+                                <td>{{(stats.items.receivedYear - stats.items.rejectedYear)/stats.items.receivedYear | percent}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>All Time</td>
+                                <td>{{stats.items.receivedAll}}</td>
+                                <td>{{stats.items.receivedAll - stats.items.rejectedWeek}}</td>
+                                <!-- <td>{{stats.items.rejectedAll}}</td> -->
+                                <td>{{(stats.items.receivedAll - stats.items.rejectedAll)/stats.items.receivedAll | percent}}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
