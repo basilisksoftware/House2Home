@@ -28,7 +28,7 @@
     "@types/alertify": "^0.3.30",
     "alertifyjs": "^1.13.1",
     "angular-datatables": "^9.0.2",
-    "datatables.net": "^1.10.20",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.20",
     "jquery": "^3.4.1",
     "rxjs": "~6.5.4",
